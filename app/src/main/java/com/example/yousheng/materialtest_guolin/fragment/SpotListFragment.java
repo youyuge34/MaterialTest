@@ -71,6 +71,7 @@ public class SpotListFragment extends Fragment implements IListFragment{
         return view;
     }
 
+    //在resume()中就让p层给我数据，并且显示出来
     @Override
     public void onResume() {
         super.onResume();
@@ -81,6 +82,7 @@ public class SpotListFragment extends Fragment implements IListFragment{
         }
     }
 
+    //销毁同时让p层把对v层的引用置空，防止内存泄漏
     @Override
     public void onDestroy() {
         super.onDestroy();
