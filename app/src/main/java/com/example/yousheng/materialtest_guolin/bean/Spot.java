@@ -8,7 +8,7 @@ public class Spot {
     public String name;
     public String location;
     public String addTime;
-    public int picUrl;
+    public String picUrl;
     public String info;
     public int id;
 }
