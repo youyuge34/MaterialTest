@@ -40,13 +40,6 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fragment_progress_bar"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
-
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"

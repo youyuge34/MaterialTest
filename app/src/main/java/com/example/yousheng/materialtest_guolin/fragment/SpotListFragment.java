@@ -21,7 +21,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.yousheng.materialtest_guolin.R;
@@ -44,7 +43,6 @@ public class SpotListFragment extends Fragment implements IListFragment{
 
     @BindView(R.id.drawer_layout)  DrawerLayout drawerLayout;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.fragment_progress_bar) ProgressBar progressBar;
     @BindView(R.id.fragment_main_recyclerview) RecyclerView recyclerView;
 
     private SpotAdapter adapter;
@@ -75,6 +73,7 @@ public class SpotListFragment extends Fragment implements IListFragment{
     @Override
     public void onResume() {
         super.onResume();
+        refreshLayout.setRefreshing(true);
         try {
             listPresenter.getSpotList();
         } catch (InterruptedException e) {
@@ -94,7 +93,6 @@ public class SpotListFragment extends Fragment implements IListFragment{
         setNavigation(view);
         setFloatingButton(view);
         setRefreshLayout();
-        setRecyclerView();
     }
 
     private void setRecyclerView() {
@@ -103,7 +101,16 @@ public class SpotListFragment extends Fragment implements IListFragment{
 
     private void setRefreshLayout() {
         refreshLayout.setColorSchemeResources(R.color.navigationBarColor);
-//        refreshLayout.setRefreshing(true);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                try {
+                    listPresenter.getSpotList();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setFloatingButton(View view) {
@@ -183,18 +190,19 @@ public class SpotListFragment extends Fragment implements IListFragment{
     @Override
     public void showSpots(List<Spot> spots) {
         adapter=new SpotAdapter(spots);
+        setRecyclerView();
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void showProgressBar() {
-        recyclerView.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
+//        recyclerView.setVisibility(View.INVISIBLE);
+        refreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideProgressBar() {
-        progressBar.setVisibility(View.INVISIBLE);
+        refreshLayout.setRefreshing(false);
         recyclerView.setVisibility(View.VISIBLE);
     }
 }
