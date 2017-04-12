@@ -27,7 +27,7 @@ public class FruitAdapter extends RecyclerView.Adapter<FruitAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.fruit_view,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_spot_view,parent,false);
         mContext=parent.getContext();
         final ViewHolder holder=new ViewHolder(view);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +65,8 @@ Fruit fruit=mList.get(position);
         public ViewHolder(View itemView) {
             super(itemView);
             cardView= (CardView) itemView;
-            imageView= (ImageView) itemView.findViewById(R.id.fruit_image);
-            textView= (TextView) itemView.findViewById(R.id.fruit_name);
+//            imageView= (ImageView) itemView.findViewById(R.id.fruit_image);
+//            textView= (TextView) itemView.findViewById(R.id.fruit_name);
         }
     }
 }
