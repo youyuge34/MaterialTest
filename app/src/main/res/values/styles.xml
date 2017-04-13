@@ -9,6 +9,18 @@
     </style>
 
     <style name="AppTheme.FruitTheme">
-
     </style>
+
+    <style name="tabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <item name="tabBackground">?attr/colorPrimary</item>
+        <!--改变指示器下标颜色-->
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+        <item name="tabTextColor">@color/tabselectedgray</item>
+        <item name="tabMode">fixed</item>
+    </style>
+
 </resources>

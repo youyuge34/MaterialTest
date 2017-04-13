@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#2a89ff</color>
     <color name="colorAccent">#eeeeee</color>
     <color name="navigationBarColor">#92cdF0</color>
+    <color name="tabselectedgray">#ccc</color>
 </resources>
