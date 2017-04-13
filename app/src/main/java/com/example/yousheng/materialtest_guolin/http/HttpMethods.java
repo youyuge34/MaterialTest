@@ -19,15 +19,13 @@ import rx.schedulers.Schedulers;
  */
 
 public class HttpMethods {
-    public static final String BASE_URL = "http://onxlr7bsm.bkt.clouddn.com/api/";
-
     private static final int DEFAULT_TIMEOUT = 5;
 
     private Retrofit retrofit;
     private SpotService movieService;
 
     //构造方法私有
-    private HttpMethods() {
+    private HttpMethods(String BASE_URL) {
         //手动创建一个OkHttpClient并设置超时时间
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -43,17 +41,17 @@ public class HttpMethods {
     }
 
     //在访问HttpMethods时创建单例
-    private static class SingletonHolder{
-        private static final HttpMethods INSTANCE = new HttpMethods();
-    }
+//    private static class SingletonHolder{
+//        private static final HttpMethods INSTANCE = new HttpMethods();
+//    }
 
     //获取单例
-    public static HttpMethods getInstance(){
-        return SingletonHolder.INSTANCE;
+    public static HttpMethods getInstance(String BASE_URL){
+        return new HttpMethods(BASE_URL);
     }
 
-    public void getSpots(Subscriber<List<Spot>> subscriber,int id){
-        movieService.getSpot(id)
+    public void getSpots(Subscriber<List<Spot>> subscriber,int position,int page){
+        movieService.getSpot(position,page)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

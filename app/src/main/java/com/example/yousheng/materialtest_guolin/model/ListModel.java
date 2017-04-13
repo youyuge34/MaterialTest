@@ -6,7 +6,6 @@ import com.example.yousheng.materialtest_guolin.bean.Spot;
 import com.example.yousheng.materialtest_guolin.http.HttpMethods;
 import com.example.yousheng.materialtest_guolin.presenter.IListPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
@@ -16,8 +15,8 @@ import rx.Subscriber;
  */
 
 public class ListModel implements IListModel {
+    public static final String BASE_URL = "http://onxlr7bsm.bkt.clouddn.com/";
     Subscriber<List<Spot>> subscriber;
-    List<Spot> list = new ArrayList<>();
 
     @Override
     public void getSpotList(final IListPresenter presenter) {
@@ -37,7 +36,7 @@ public class ListModel implements IListModel {
                 presenter.showRecyclerView(spots);
             }
         };
-        HttpMethods.getInstance().getSpots(subscriber, 1);
+        HttpMethods.getInstance(BASE_URL).getSpots(subscriber, presenter.getFragPosition(), 1);
     }
 
 //    private List<Spot> createList() {

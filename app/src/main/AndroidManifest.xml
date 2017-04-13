@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.MainActivity"
-            android:label="Fruits">
+            android:label="映像南京">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

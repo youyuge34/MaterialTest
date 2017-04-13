@@ -14,6 +14,6 @@ import rx.Observable;
  */
 
 public interface SpotService {
-    @GET("spot/{id}.json")
-    Observable<List<Spot>> getSpot(@Path("id") int id);
+    @GET("api/{position}/{page}.json")
+    Observable<List<Spot>> getSpot(@Path("position") int position,@Path("page") int page);
 }
