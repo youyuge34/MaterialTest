@@ -126,4 +126,9 @@ public class SpotListFragment extends Fragment implements IListFragment{
         refreshLayout.setRefreshing(false);
         recyclerView.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public int getFragmentPosition() {
+        return position;
+    }
 }

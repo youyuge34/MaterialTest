@@ -15,4 +15,6 @@ public interface IListPresenter {
     //实际是m层获得p层的引用，在得到数据后回调p层里的此方法
     void showRecyclerView(List<Spot> list);
     void onDestroy();
+    //返回当前fragment在viewpager里的位置信息，从而让m层根据此方法发送不同的网络请求
+    int getFragPosition();
 }

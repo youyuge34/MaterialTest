@@ -13,4 +13,6 @@ public interface IListFragment {
     void showSpots(List<Spot> spots);
     void showProgressBar();
     void hideProgressBar();
+    //返回position给p层
+    int getFragmentPosition();
 }

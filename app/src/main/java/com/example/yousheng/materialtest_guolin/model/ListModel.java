@@ -20,19 +20,11 @@ public class ListModel implements IListModel {
     List<Spot> list = new ArrayList<>();
 
     @Override
-    public void getSpotList(final IListPresenter listener) {
-//        new Handler(Looper.getMainLooper())
-//                .postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        //调用传进来的p层里的方法
-//                        listener.showRecyclerView(createList());
-//                    }
-//                }, 2000);
+    public void getSpotList(final IListPresenter presenter) {
         subscriber = new Subscriber<List<Spot>>() {
             @Override
             public void onCompleted() {
-                Log.d("test1", "onCompleted: ");
+                Log.d("test1", "onCompleted: " + presenter.getFragPosition());
             }
 
             @Override
@@ -42,11 +34,10 @@ public class ListModel implements IListModel {
 
             @Override
             public void onNext(List<Spot> spots) {
-                listener.showRecyclerView(spots);
+                presenter.showRecyclerView(spots);
             }
         };
         HttpMethods.getInstance().getSpots(subscriber, 1);
-//        listener.showRecyclerView(createList());
     }
 
 //    private List<Spot> createList() {
@@ -99,7 +90,6 @@ public class ListModel implements IListModel {
 //        HttpMethods.getInstance().getSpots(subscriber,1);
 //        Log.d("test1", "createList: "+list.get(0).name);
 //        return list;
-
 
 
 }

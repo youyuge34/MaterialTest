@@ -34,6 +34,11 @@ public class ListPresenter implements IListPresenter {
         listFragment=null;
     }
 
+    @Override
+    public int getFragPosition() {
+        return listFragment.getFragmentPosition();
+    }
+
     //m层回调此接口方法，在得到数据后执行，把数据交给v层让它显示出来，并且隐藏进度条
     @Override
     public void showRecyclerView(List<Spot> list) {

@@ -29,7 +29,7 @@ public class ViewpagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        String[] strings={"    街道    ","    地名    ","    景点    "};
+        String[] strings={"街道","地名","景点"};
         return strings[position];
     }
 }
