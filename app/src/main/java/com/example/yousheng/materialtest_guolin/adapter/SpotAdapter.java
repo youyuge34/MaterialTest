@@ -49,7 +49,7 @@ public class SpotAdapter extends RecyclerView.Adapter<SpotAdapter.SpotHolder> {
     @Override
     public void onBindViewHolder(SpotHolder holder, int position) {
         Spot spot=list.get(position);
-        Glide.with(context).load(spot.picUrl).into(holder.spotImage);
+        Glide.with(context).load(spot.picUrl).placeholder(R.drawable.loading_gif).error(R.drawable.delete).into(holder.spotImage);
         holder.spotName.setText(spot.name);
     }
 

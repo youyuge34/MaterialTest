@@ -18,25 +18,40 @@ public class ListPresenter implements IListPresenter {
 
     public ListPresenter(IListFragment listFragment) {
         this.listFragment = listFragment;
-        listModel=new ListModel();
+        listModel = new ListModel();
     }
 
     //让m层去获取数据，并让v层显示进度条，m层获取到后会调用showRecyclerView方法
     @Override
     public void getSpotList() throws InterruptedException {
-        listFragment.showProgressBar();
+//        listFragment.showProgressBar();
         listModel.getSpotList(this);
     }
 
     //防止内存泄漏
     @Override
     public void onDestroy() {
-        listFragment=null;
+        listFragment = null;
     }
 
     @Override
     public int getFragPosition() {
         return listFragment.getFragmentPosition();
+    }
+
+    @Override
+    public void loadNextPage(int page) {
+        listModel.loadNextPage(this, page);
+    }
+
+    @Override
+    public void showNextPage(List<Spot> list) {
+        listFragment.showNextPage(list);
+    }
+
+    @Override
+    public void showNoNextPage() {
+        listFragment.showNoNextPage();
     }
 
     //m层回调此接口方法，在得到数据后执行，把数据交给v层让它显示出来，并且隐藏进度条

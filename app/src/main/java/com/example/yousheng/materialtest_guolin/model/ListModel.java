@@ -39,6 +39,28 @@ public class ListModel implements IListModel {
         HttpMethods.getInstance(BASE_URL).getSpots(subscriber, presenter.getFragPosition(), 1);
     }
 
+    @Override
+    public void loadNextPage(final IListPresenter presenter,int page) {
+        subscriber = new Subscriber<List<Spot>>() {
+            @Override
+            public void onCompleted() {
+                Log.d("test1", "onCompleted: loadNextPage" );
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                presenter.showNoNextPage();
+            }
+
+            @Override
+            public void onNext(List<Spot> spots) {
+                presenter.showNextPage(spots);
+            }
+        };
+        HttpMethods.getInstance(BASE_URL).getSpots(subscriber, presenter.getFragPosition(), page);
+    }
+
 //    private List<Spot> createList() {
 //        String baseUrl="http://onxlr7bsm.bkt.clouddn.com/api/";
 //

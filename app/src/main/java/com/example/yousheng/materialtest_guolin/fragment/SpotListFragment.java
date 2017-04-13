@@ -2,9 +2,8 @@ package com.example.yousheng.materialtest_guolin.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,10 @@ import com.example.yousheng.materialtest_guolin.bean.Spot;
 import com.example.yousheng.materialtest_guolin.presenter.IListPresenter;
 import com.example.yousheng.materialtest_guolin.presenter.ListPresenter;
 import com.example.yousheng.materialtest_guolin.view.IListFragment;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,14 +30,15 @@ import butterknife.ButterKnife;
 
 public class SpotListFragment extends Fragment implements IListFragment{
 
-    @BindView(R.id.swipe_refresh) SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.fragment_main_recyclerview) RecyclerView recyclerView;
+    @BindView(R.id.fragment_main_recyclerview) XRecyclerView recyclerView;
 
     private static final String COUNT_OF_FRAGMENT="count_of_this_fragment";
 
     private SpotAdapter adapter;
     private IListPresenter listPresenter;
     private int position;
+    private int mCrurrentPage=1;
+    List<Spot> mList=new ArrayList<>();
 
     //活动调用此方法生成新的fragment,并且用setArguments传达数据告诉这个fragment它是第几个
     public static SpotListFragment newInstance(int postion) {
@@ -71,7 +74,6 @@ public class SpotListFragment extends Fragment implements IListFragment{
     @Override
     public void onResume() {
         super.onResume();
-        refreshLayout.setRefreshing(true);
         try {
             listPresenter.getSpotList();
         } catch (InterruptedException e) {
@@ -87,48 +89,78 @@ public class SpotListFragment extends Fragment implements IListFragment{
     }
 
     private void initView(View view) {
-        setRefreshLayout();
+        setXRVrefresh();
+    }
+
+    private void setXRVrefresh() {
+        recyclerView.setRefreshProgressStyle(ProgressStyle.LineScale);
+        recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                try {
+                    mCrurrentPage=1;
+                    listPresenter.getSpotList();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onLoadMore() {
+                mCrurrentPage++;
+                listPresenter.loadNextPage(mCrurrentPage);
+            }
+        });
     }
 
     private void setRecyclerView() {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
     }
 
-    private void setRefreshLayout() {
-        refreshLayout.setColorSchemeResources(R.color.navigationBarColor);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                try {
-                    listPresenter.getSpotList();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     @Override
     public void showSpots(List<Spot> spots) {
-        adapter=new SpotAdapter(spots);
+        //将首页信息赋予全局变量，以便上拉加载下一页的时候好往里面add
+        mList=spots;
+        adapter=new SpotAdapter(mList);
         setRecyclerView();
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void showProgressBar() {
-//        recyclerView.setVisibility(View.INVISIBLE);
-        refreshLayout.setRefreshing(true);
+        //已经没有必要
+
     }
 
     @Override
     public void hideProgressBar() {
-        refreshLayout.setRefreshing(false);
+        recyclerView.refreshComplete();
         recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public int getFragmentPosition() {
         return position;
+    }
+
+    @Override
+    public void showNextPage(List<Spot> spots) {
+        recyclerView.setLoadingMoreEnabled(true);
+        mList.addAll(spots);
+        adapter.notifyDataSetChanged();
+        recyclerView.loadMoreComplete();
+    }
+
+    @Override
+    public void showNoNextPage() {
+        recyclerView.setLoadingMoreEnabled(false);
+        //snackbar比起toast多一个按钮,传入的第一个参数为界面布局任意一个view，snackbar会自动查找最外布局来展示
+        Snackbar.make(recyclerView, "兄弟，没有更多数据了！", Snackbar.LENGTH_SHORT).setAction("知道啦", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "data restored", Toast.LENGTH_SHORT).show();
+            }
+        }).show();
     }
 }

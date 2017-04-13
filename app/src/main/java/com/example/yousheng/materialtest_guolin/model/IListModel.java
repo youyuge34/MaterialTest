@@ -9,4 +9,6 @@ import com.example.yousheng.materialtest_guolin.presenter.IListPresenter;
 public interface IListModel {
     //p层调用此方法来获取到spot数据
     void getSpotList(IListPresenter listener) throws InterruptedException;
+    //p层调用此方法获取下一页数据
+    void loadNextPage(IListPresenter listPresenter,int page);
 }

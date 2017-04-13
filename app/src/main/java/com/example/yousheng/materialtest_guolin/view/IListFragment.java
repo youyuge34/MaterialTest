@@ -15,4 +15,8 @@ public interface IListFragment {
     void hideProgressBar();
     //返回position给p层
     int getFragmentPosition();
+    //p层返回下一页数据给v层，v层显示出来
+    void showNextPage(List<Spot> spots);
+    //p层返回了一个消息说：没有下一页了，请停止加载更多并告诉用户
+    void showNoNextPage();
 }
