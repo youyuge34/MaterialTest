@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jcodecraeer.xrecyclerview.XRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_main_recyclerview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    android:layout_height="match_parent">
 
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/fragment_main_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <!--首此加载时候的进度圈-->
+    <ProgressBar
+        android:id="@+id/progress_first_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible" />
+
+</FrameLayout>
