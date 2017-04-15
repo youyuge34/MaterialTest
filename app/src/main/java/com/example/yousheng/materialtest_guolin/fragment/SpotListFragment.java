@@ -2,6 +2,7 @@ package com.example.yousheng.materialtest_guolin.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -39,6 +40,7 @@ public class SpotListFragment extends Fragment implements IListFragment {
 
     @BindView(R.id.fragment_main_recyclerview) XRecyclerView recyclerView;
     @BindView(R.id.progress_first_page) ProgressBar progressFirstPage;
+    @BindView(R.id.fab) FloatingActionButton fab;
 
     private static final String COUNT_OF_FRAGMENT = "count_of_this_fragment";
 
@@ -101,7 +103,7 @@ public class SpotListFragment extends Fragment implements IListFragment {
     private void initView(View view) {
         setXRVrefresh();
         setBanner();
-
+        setFloatingButton();
     }
 
     private void setXRVrefresh() {
@@ -153,6 +155,15 @@ public class SpotListFragment extends Fragment implements IListFragment {
         }
     }
 
+    private void setFloatingButton() {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
+            }
+        });
+    }
+
     @Override
     public void showRecycler(List<Spot> spots) {
         //将首页信息赋予全局变量，以便上拉加载下一页的时候好往里面add
@@ -192,6 +203,7 @@ public class SpotListFragment extends Fragment implements IListFragment {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(getActivity(), "data restored", Toast.LENGTH_SHORT).show();
+//                recyclerView.smoothScrollToPosition(0);
             }
         }).show();
     }

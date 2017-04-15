@@ -1,7 +1,6 @@
 package com.example.yousheng.materialtest_guolin.view;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -23,9 +22,10 @@ import com.example.yousheng.materialtest_guolin.adapter.ViewpagerAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.yousheng.materialtest_guolin.R.id.fab;
+
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
-    @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.main_pager_tabs) TabLayout tabLayout;
     @BindView(R.id.main_viewpager) ViewPager viewPager;
@@ -43,26 +43,11 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         setToolbar();
         setNavigation();
-        setFloatingButton();
+//        setFloatingButton();
         setViewPager();
     }
 
-    private void setFloatingButton() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Main", "onClick: " + v.toString());
-//                Toast.makeText(MainActivity.this,"fab clicked",Toast.LENGTH_SHORT).show();
-                //snackbar比起toast多一个按钮,传入的第一个参数为界面布局任意一个view，snackbar会自动查找最外布局来展示
-                Snackbar.make(v, "data deleted", Snackbar.LENGTH_SHORT).setAction("Undo", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(MainActivity.this, "data restored", Toast.LENGTH_SHORT).show();
-                    }
-                }).show();
-            }
-        });
-    }
+
 
     private void setNavigation() {
         //在drawer抽屉中建立一个navigation的view，此view包含一个header布局和一个menu
