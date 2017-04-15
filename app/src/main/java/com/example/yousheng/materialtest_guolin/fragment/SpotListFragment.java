@@ -16,10 +16,12 @@ import android.widget.ProgressBar;
 import com.example.yousheng.materialtest_guolin.R;
 import com.example.yousheng.materialtest_guolin.adapter.GlideImageLoader;
 import com.example.yousheng.materialtest_guolin.adapter.SpotAdapter;
+import com.example.yousheng.materialtest_guolin.adapter.onRecyclerViewItemClicked;
 import com.example.yousheng.materialtest_guolin.bean.Spot;
 import com.example.yousheng.materialtest_guolin.presenter.IListPresenter;
 import com.example.yousheng.materialtest_guolin.presenter.ListPresenter;
 import com.example.yousheng.materialtest_guolin.view.IListFragment;
+import com.example.yousheng.materialtest_guolin.view.SpotDetailActivity;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.youth.banner.Banner;
@@ -47,15 +49,15 @@ public class SpotListFragment extends Fragment implements IListFragment {
     private SpotAdapter adapter;
     private IListPresenter listPresenter;
     private int position;
-    private int mCrurrentPage = 1;
+    private int mCurrentPage = 1;
     List<Spot> mList = new ArrayList<>();
     Banner banner;
 
     //活动调用此方法生成新的fragment,并且用setArguments传达数据告诉这个fragment它是第几个
-    public static SpotListFragment newInstance(int postion) {
+    public static SpotListFragment newInstance(int position) {
         SpotListFragment listFragment = new SpotListFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(COUNT_OF_FRAGMENT, postion);
+        bundle.putInt(COUNT_OF_FRAGMENT, position);
         listFragment.setArguments(bundle);
         return listFragment;
     }
@@ -78,19 +80,25 @@ public class SpotListFragment extends Fragment implements IListFragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
         initView(view);
-        return view;
-    }
-
-    //在resume()中就让p层给我数据，并且显示出来
-    @Override
-    public void onResume() {
-        super.onResume();
+        //在resume()中就让p层给我数据，并且显示出来
         try {
             listPresenter.getSpotList();
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        try {
+//            listPresenter.getSpotList();
+//
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     //销毁同时让p层把对v层的引用置空，防止内存泄漏
@@ -113,7 +121,7 @@ public class SpotListFragment extends Fragment implements IListFragment {
             @Override
             public void onRefresh() {
                 try {
-                    mCrurrentPage = 1;
+                    mCurrentPage = 1;
                     listPresenter.getSpotList();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -122,8 +130,8 @@ public class SpotListFragment extends Fragment implements IListFragment {
 
             @Override
             public void onLoadMore() {
-                mCrurrentPage++;
-                listPresenter.loadNextPage(mCrurrentPage);
+                mCurrentPage++;
+                listPresenter.loadNextPage(mCurrentPage);
             }
         });
     }
@@ -143,10 +151,18 @@ public class SpotListFragment extends Fragment implements IListFragment {
 
     }
 
+    //获得返回的数据后，设置layoutmanger与子item的点击事件
     private void setRecyclerView() {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        //实现子item点击事件的接口回调,根据点击的位置，获取相应的spot实例数据后启动详情页activity
+        adapter.setOnRecyclerViewItemClickedListener(new onRecyclerViewItemClicked() {
+            @Override
+            public void onClicked(int position) {
+//                Toast.makeText(getActivity(),"clicked"+position,Toast.LENGTH_SHORT).show();
+                SpotDetailActivity.newInstance(getActivity(),mList.get(position-2));
+            }
+        });
     }
-
 
     //首页第一次加载完毕后让进度圈消失，以后再也不用出现了
     private void setProgressFirstPageOff() {
@@ -169,9 +185,11 @@ public class SpotListFragment extends Fragment implements IListFragment {
         //将首页信息赋予全局变量，以便上拉加载下一页的时候好往里面add
         mList = spots;
         adapter = new SpotAdapter(mList);
+
+        //设置layoutmanger与子item的点击事件
         setRecyclerView();
         recyclerView.setAdapter(adapter);
-        //显示出
+
         //第一次加载首页的时候显示进度圈，加载完毕后让进度圈消失，以后刷新加载不用它了，我们有下拉刷新
         setProgressFirstPageOff();
     }

@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- 让图片保持原有比例填充，裁剪掉超出的部分-->
-        <ImageView
+        <com.example.yousheng.materialtest_guolin.widget.RatioImageView
             android:id="@+id/spot_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

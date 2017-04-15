@@ -2,7 +2,6 @@ package com.example.yousheng.materialtest_guolin.view;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -10,10 +9,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.yousheng.materialtest_guolin.R;
@@ -21,8 +18,6 @@ import com.example.yousheng.materialtest_guolin.adapter.ViewpagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.example.yousheng.materialtest_guolin.R.id.fab;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -65,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
     private void setToolbar() {
         //设置toolbar
         setSupportActionBar(toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             //显示导航按钮
