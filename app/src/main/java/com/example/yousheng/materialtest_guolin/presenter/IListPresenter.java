@@ -13,7 +13,7 @@ public interface IListPresenter {
     void getSpotList() throws InterruptedException;
     //而p获得数据后返回给v层显示
     //实际是m层获得p层的引用，在得到首页数据后回调p层里的此方法
-    void showRecyclerView(List<Spot> list);
+    void showRecyclerAndBanner(List<Spot> list);
     void onDestroy();
     //返回当前fragment在viewpager里的位置信息，从而让m层根据此方法发送不同的网络请求
     int getFragPosition();

@@ -22,6 +22,8 @@ import com.example.yousheng.materialtest_guolin.view.IListFragment;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,23 +100,13 @@ public class SpotListFragment extends Fragment implements IListFragment {
 
     private void initView(View view) {
         setXRVrefresh();
-        banner = new Banner(getActivity());
-        DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        banner.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,dm.heightPixels/4));
-        recyclerView.addHeaderView(banner);
-
-        List<Integer> list = new ArrayList<>();
-        list.add(R.drawable.loading_gif);
-        list.add(R.drawable.debug);
-        banner.setImages(list)
-                .setImageLoader(new GlideImageLoader())
-                .start();
+        setBanner();
 
     }
 
     private void setXRVrefresh() {
         recyclerView.setRefreshProgressStyle(ProgressStyle.LineScale);
+        recyclerView.setLoadingMoreProgressStyle(ProgressStyle.LineScale);
         recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
@@ -134,6 +126,21 @@ public class SpotListFragment extends Fragment implements IListFragment {
         });
     }
 
+    private void setBanner() {
+        banner = new Banner(getActivity());
+
+        //获取屏幕高度用来设定banner的height
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        banner.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (dm.heightPixels/3.7)));
+        banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
+        banner.setBannerAnimation(Transformer.DepthPage);
+
+        //为xrecyclerview添加banner作为头布局
+        recyclerView.addHeaderView(banner);
+
+    }
+
     private void setRecyclerView() {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
     }
@@ -147,26 +154,21 @@ public class SpotListFragment extends Fragment implements IListFragment {
     }
 
     @Override
-    public void showSpots(List<Spot> spots) {
-        //第一次加载首页的时候显示进度圈，加载完毕后让进度圈消失，以后刷新加载不用它了，我们有下拉刷新
-        setProgressFirstPageOff();
+    public void showRecycler(List<Spot> spots) {
         //将首页信息赋予全局变量，以便上拉加载下一页的时候好往里面add
         mList = spots;
         adapter = new SpotAdapter(mList);
         setRecyclerView();
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void showProgressBar() {
-        //已经没有必要
-
+        //显示出
+        //第一次加载首页的时候显示进度圈，加载完毕后让进度圈消失，以后刷新加载不用它了，我们有下拉刷新
+        setProgressFirstPageOff();
     }
 
     @Override
     public void hideProgressBar() {
+        //刷新的时候需要关闭下拉刷新
         recyclerView.refreshComplete();
-        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -186,11 +188,29 @@ public class SpotListFragment extends Fragment implements IListFragment {
     public void showNoNextPage() {
         recyclerView.setLoadingMoreEnabled(false);
         //snackbar比起toast多一个按钮,传入的第一个参数为界面布局任意一个view，snackbar会自动查找最外布局来展示
-        Snackbar.make(recyclerView, "兄弟，没有更多数据了！", Snackbar.LENGTH_INDEFINITE).setAction("知道啦", new View.OnClickListener() {
+        Snackbar.make(recyclerView, "兄弟，没有更多数据了！", Snackbar.LENGTH_LONG).setAction("知道啦", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(getActivity(), "data restored", Toast.LENGTH_SHORT).show();
             }
         }).show();
+    }
+
+    @Override
+    public void showBanner(List<Spot> spots) {
+        int pageCount=spots.size()>=5?5:spots.size();
+        List<String> picUrls=new ArrayList<>();
+        List<String> picTitles=new ArrayList<>();
+        for(int i=0;i<pageCount;i++){
+            picUrls.add(spots.get(i).picUrl);
+        }
+        for(int i=0;i<pageCount;i++){
+            picTitles.add(spots.get(i).name);
+        }
+
+        banner.setImages(picUrls)
+                .setBannerTitles(picTitles)
+                .setImageLoader(new GlideImageLoader())
+                .start();
     }
 }

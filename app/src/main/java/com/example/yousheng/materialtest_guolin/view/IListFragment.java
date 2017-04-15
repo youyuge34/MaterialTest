@@ -10,8 +10,7 @@ import java.util.List;
  */
 
 public interface IListFragment {
-    void showSpots(List<Spot> spots);
-    void showProgressBar();
+    void showRecycler(List<Spot> spots);
     void hideProgressBar();
     //返回position给p层
     int getFragmentPosition();
@@ -19,4 +18,6 @@ public interface IListFragment {
     void showNextPage(List<Spot> spots);
     //p层返回了一个消息说：没有下一页了，请停止加载更多并告诉用户
     void showNoNextPage();
+    //p层返回了首页数据，v层显示首页前几个spot的banner
+    void showBanner(List<Spot> spots);
 }

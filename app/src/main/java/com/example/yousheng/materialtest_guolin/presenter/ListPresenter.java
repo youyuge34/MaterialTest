@@ -21,10 +21,9 @@ public class ListPresenter implements IListPresenter {
         listModel = new ListModel();
     }
 
-    //让m层去获取数据，并让v层显示进度条，m层获取到后会调用showRecyclerView方法
+    //让m层去获取数据，m层获取到后会调用showRecyclerView方法
     @Override
     public void getSpotList() throws InterruptedException {
-//        listFragment.showProgressBar();
         listModel.getSpotList(this);
     }
 
@@ -54,10 +53,11 @@ public class ListPresenter implements IListPresenter {
         listFragment.showNoNextPage();
     }
 
-    //m层回调此接口方法，在得到数据后执行，把数据交给v层让它显示出来，并且隐藏进度条
+    //m层回调此接口方法，在得到数据后执行，把数据交给v层让它显示recyclerview和banner，并且隐藏下拉刷新条
     @Override
-    public void showRecyclerView(List<Spot> list) {
-        listFragment.showSpots(list);
+    public void showRecyclerAndBanner(List<Spot> list) {
+        listFragment.showRecycler(list);
+        listFragment.showBanner(list);
         listFragment.hideProgressBar();
     }
 }

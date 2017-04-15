@@ -33,7 +33,7 @@ public class ListModel implements IListModel {
 
             @Override
             public void onNext(List<Spot> spots) {
-                presenter.showRecyclerView(spots);
+                presenter.showRecyclerAndBanner(spots);
             }
         };
         HttpMethods.getInstance(BASE_URL).getSpots(subscriber, presenter.getFragPosition(), 1);
