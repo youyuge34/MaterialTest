@@ -27,6 +27,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,12 +94,6 @@ public class SpotListFragment extends Fragment implements IListFragment {
     @Override
     public void onResume() {
         super.onResume();
-//        try {
-//            listPresenter.getSpotList();
-//
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
     }
 
     //销毁同时让p层把对v层的引用置空，防止内存泄漏
@@ -145,6 +140,13 @@ public class SpotListFragment extends Fragment implements IListFragment {
         banner.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (dm.heightPixels/3.7)));
         banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
         banner.setBannerAnimation(Transformer.DepthPage);
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                SpotDetailActivity.newInstance(getActivity(),mList.get(position));
+                getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+            }
+        });
 
         //为xrecyclerview添加banner作为头布局
         recyclerView.addHeaderView(banner);
@@ -158,8 +160,8 @@ public class SpotListFragment extends Fragment implements IListFragment {
         adapter.setOnRecyclerViewItemClickedListener(new onRecyclerViewItemClicked() {
             @Override
             public void onClicked(int position) {
-//                Toast.makeText(getActivity(),"clicked"+position,Toast.LENGTH_SHORT).show();
                 SpotDetailActivity.newInstance(getActivity(),mList.get(position-2));
+                getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
     }

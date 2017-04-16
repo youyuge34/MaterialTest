@@ -8,11 +8,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -30,13 +32,16 @@ import butterknife.ButterKnife;
 public class SpotDetailActivity extends AppCompatActivity {
     private static final String INFO_OF_SPOT = "info_of_the_spot_to_send_into";
     Spot mSpot;
+    boolean clickedFabShare = false;
 
     @BindView(R.id.spot_image_view) ImageView spotImage;
     @BindView(R.id.spot_content_text) TextView spotText;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.fab_share) FloatingActionButton fabShare;
+    @BindView(R.id.fab_up_to_top) FloatingActionButton fabUpToTop;
     @BindView(R.id.webview) WebView webView;
+    @BindView(R.id.scroll_view) NestedScrollView scrollView;
 
     public static void newInstance(Context context, Spot spot) {
         Intent intent = new Intent(context, SpotDetailActivity.class);
@@ -59,6 +64,48 @@ public class SpotDetailActivity extends AppCompatActivity {
         setSpotImage();
         setCollapseAndToolbar();
         setWebView();
+        setFabUpToTop();
+        setFabShare();
+    }
+
+    private void setFabShare() {
+        fabShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!clickedFabShare){
+                    //若是没收藏状态
+                    fabShare.setImageResource(R.drawable.ic_love_selected);
+                    clickedFabShare=!clickedFabShare;
+                }else {
+                    fabShare.setImageResource(R.drawable.ic_love_unselected);
+                    clickedFabShare=!clickedFabShare;
+                }
+            }
+        });
+    }
+
+    private void setFabUpToTop() {
+        fabUpToTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scrollView.smoothScrollTo(0,0);
+            }
+        });
+
+        //设置滑动监听
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(!fabUpToTop.isShown()&&(scrollY-oldScrollY)>15){
+                    //手指上滑动显示fab
+                    fabUpToTop.show();
+                }else if((oldScrollY-scrollY)>15){
+                    //手指下滑隐藏fab
+                    fabUpToTop.hide();
+                }
+
+            }
+        });
     }
 
     private void setSpotImage() {
@@ -83,7 +130,7 @@ public class SpotDetailActivity extends AppCompatActivity {
         settings.setSupportZoom(true);
         webView.setWebViewClient(new LoveClient());
 
-        webView.loadUrl("http://www.baidu.com");
+        webView.loadUrl("http://qr14.cn/DpKTsu");
     }
 
     @Override

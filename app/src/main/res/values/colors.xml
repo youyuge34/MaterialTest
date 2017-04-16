@@ -5,4 +5,5 @@
     <color name="colorAccent">#eeeeee</color>
     <color name="navigationBarColor">#92cdF0</color>
     <color name="tabselectedgray">#ccc</color>
+    <color name="fabBlue">#529ecc</color>
 </resources>
