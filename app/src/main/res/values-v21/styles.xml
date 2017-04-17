@@ -11,7 +11,11 @@
 
     <style name="AppTheme.FruitTheme">
         <item name="android:statusBarColor">@android:color/transparent</item>
-
     </style>
 
+    <!-- 适用于开启滑动返回功能的 Activity -->
+    <style name="AppTheme.FruitTheme.Transparent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>

@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int PAGE_COUNT = 3;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         initView();
     }
 
+
     private void initView() {
         setToolbar();
         setNavigation();
-//        setFloatingButton();
         setViewPager();
     }
 

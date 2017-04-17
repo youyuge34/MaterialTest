@@ -10,7 +10,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +28,7 @@ import com.example.yousheng.materialtest_guolin.bean.Spot;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpotDetailActivity extends AppCompatActivity {
+public class SpotDetailActivity extends BaseActivity {
     private static final String INFO_OF_SPOT = "info_of_the_spot_to_send_into";
     Spot mSpot;
     boolean clickedFabShare = false;
@@ -58,6 +57,16 @@ public class SpotDetailActivity extends AppCompatActivity {
         //获取列表传来的spot数据
         mSpot = (Spot) getIntent().getSerializableExtra(INFO_OF_SPOT);
         initView();
+    }
+
+    @Override
+    protected void setListener() {
+
+    }
+
+    @Override
+    protected void processLogic(Bundle savedInstanceState) {
+
     }
 
     private void initView() {
