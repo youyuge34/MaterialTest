@@ -15,14 +15,14 @@
             android:label="映像南京">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".FruitActivity"
+            android:name=".view.SpotDetailActivity"
             android:theme="@style/AppTheme.FruitTheme" />
-        <activity android:name=".view.SpotDetailActivity"></activity>
+
     </application>
 
 </manifest>
