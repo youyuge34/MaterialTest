@@ -2,6 +2,8 @@ package com.example.yousheng.materialtest_guolin;
 
 import android.app.Application;
 
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackManager;
 
 /**
@@ -17,5 +19,6 @@ public class App extends Application {
 
         // 必须在 Application 的 onCreate 方法中执行 BGASwipeBackManager.getInstance().init(this) 来初始化滑动返回
         BGASwipeBackManager.getInstance().init(this);
+        ZXingLibrary.initDisplayOpinion(this);
     }
 }

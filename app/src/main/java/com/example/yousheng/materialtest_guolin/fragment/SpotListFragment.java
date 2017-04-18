@@ -14,7 +14,7 @@ import android.widget.AbsListView;
 import android.widget.ProgressBar;
 
 import com.example.yousheng.materialtest_guolin.R;
-import com.example.yousheng.materialtest_guolin.adapter.GlideImageLoader;
+import com.example.yousheng.materialtest_guolin.util.GlideImageLoader;
 import com.example.yousheng.materialtest_guolin.adapter.SpotAdapter;
 import com.example.yousheng.materialtest_guolin.adapter.onRecyclerViewItemClicked;
 import com.example.yousheng.materialtest_guolin.bean.Spot;

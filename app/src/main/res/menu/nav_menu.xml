@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/contacts"
-            android:icon="@drawable/contacts"
-            android:title="Contacts" />
+            android:id="@+id/home_page"
+            android:icon="@drawable/ic_action_home_page"
+            android:title="首页" />
         <item
-            android:id="@+id/message"
-            android:icon="@drawable/message"
-            android:title="Message" />
+            android:id="@+id/button_1_capture"
+            android:icon="@drawable/ic_action_capture"
+            android:title="扫一扫" />
         <item
-            android:id="@+id/volume"
-            android:icon="@drawable/volume"
-            android:title="Volume" />
+            android:id="@+id/button_2_from_gallery"
+            android:icon="@drawable/ic_action_capture_from_gallery"
+            android:title="从相册识别" />
         <item
-            android:id="@+id/debug"
-            android:icon="@drawable/debug"
-            android:title="Debug" />
+            android:id="@+id/button_3_create_capture"
+            android:icon="@drawable/ic_action_create_capture"
+            android:title="生成二维码" />
         <item
             android:id="@+id/warning"
             android:icon="@drawable/warning"
