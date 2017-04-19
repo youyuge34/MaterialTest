@@ -108,11 +108,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 cameraFromGalleryTask();
                 break;
             case R.id.button_3_create_capture:
-
+                cameraCreateQRCode();
                 break;
         }
     }
 
+    //扫一扫
     @AfterPermissionGranted(REQUEST_CAMERA_PERM)
     public void cameraTask() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
@@ -126,11 +127,18 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
+    //从相册识别二维码
     private void cameraFromGalleryTask() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         startActivityForResult(intent, REQUEST_IMAGE);
+    }
+
+    //开启生成二维码的应用
+    private void cameraCreateQRCode() {
+        Intent intent=new Intent(this,CreateQRCodeActivity.class);
+        startActivity(intent);
     }
 
     //处理二维码返回结果
@@ -235,12 +243,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        Toast.makeText(this, "执行onPermissionsGranted()...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "权限已允许!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        Toast.makeText(this, "执行onPermissionsDenied()...", Toast.LENGTH_SHORT).show();
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this, "当前App需要申请camera权限,需要打开设置页面么?")
                     .setTitle("权限申请")

@@ -16,6 +16,9 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 自行定制扫描二维码的布局界面
+ */
 public class CaptureMadeByUsActivity extends BaseActivity {
     private CaptureFragment captureFragment;
     @BindView(R.id.toolbar)

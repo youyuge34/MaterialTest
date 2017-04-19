@@ -4,4 +4,5 @@
     <string name="action_copy_url">复制链接</string>
     <string name="action_open_url">打开链接</string>
     <string name="tip_copy_done">复制成功</string>
+    <string name="string_enter_spot_name">请输入地点的名称</string>
 </resources>
