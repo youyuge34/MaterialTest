@@ -160,7 +160,7 @@ public class ImageUtil {
         try {
             FileOutputStream fos = new FileOutputStream(file);
             //通过io流的方式来压缩保存图片
-            boolean isSuccess = bmp.compress(Bitmap.CompressFormat.JPEG, 60, fos);
+            boolean isSuccess = bmp.compress(Bitmap.CompressFormat.JPEG, 99, fos);
             fos.flush();
             fos.close();
 

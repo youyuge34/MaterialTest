@@ -15,12 +15,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVUser;
 import com.example.yousheng.materialtest_guolin.R;
 import com.example.yousheng.materialtest_guolin.adapter.ViewpagerAdapter;
 import com.example.yousheng.materialtest_guolin.bean.Spot;
 import com.example.yousheng.materialtest_guolin.util.ImageUtil;
+import com.example.yousheng.materialtest_guolin.zxing.CaptureMadeByUsActivity;
+import com.example.yousheng.materialtest_guolin.zxing.CreateQRCodeActivity;
 import com.google.gson.Gson;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -41,12 +45,25 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     TabLayout tabLayout;
     @BindView(R.id.main_viewpager)
     ViewPager viewPager;
+//    @BindView(R.id.button_4_login)
+//    MenuItem itemLogin;
+//    @BindView(R.id.mail)
+//    TextView textMail;
+//    @BindView(R.id.username)
+//    TextView textUsername;
+MenuItem itemLogin;
+    TextView textMail;
+    TextView textUsername;
+
 
     private static final int REQUEST_CODE = 0;
     private static final int REQUEST_IMAGE = 1;
     public static final int PAGE_COUNT = 3;
     //请求CAMERA权限码
     public static final int REQUEST_CAMERA_PERM = 101;
+    public static  int LOGIN_STATE=2;
+    public static final int LOGIN_IN=4;
+    public static final int LOGIN_OUT=5;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +73,13 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         initView();
     }
 
+    //在onResume中判断是否用户已经登录，若是登录了则设置drawlayout_menu相关text，且按钮text变注销
+    //若是没登录，则设置drawlayout_menu相关text，且按钮text变登录
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isLoginIn();
+    }
 
     private void initView() {
         setToolbar();
@@ -66,7 +90,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     private void setNavigation() {
         //在drawer抽屉中建立一个navigation的view，此view包含一个header布局和一个menu
         NavigationView navigationMenu = (NavigationView) findViewById(R.id.nav_view);
-//        navigationMenu.setCheckedItem(R.id.contacts);
+        itemLogin=navigationMenu.getMenu().getItem(4);
+        textMail= (TextView) navigationMenu.getHeaderView(0).findViewById(R.id.mail);
+        textUsername=(TextView) navigationMenu.getHeaderView(0).findViewById(R.id.username);
         navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
@@ -96,7 +122,26 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    //设置navi子item的点击事件（扫一扫等等）
+    //回到页面或者点击注销 都会调用，来判断是否已经登录，从而改变登录状态码和侧栏文字
+    private void isLoginIn() {
+        //若是已经登录了
+        if(AVUser.getCurrentUser()!=null){
+            //改变状态变量
+            LOGIN_STATE=LOGIN_IN;
+            itemLogin.setTitle("注销");
+            textMail.setText(AVUser.getCurrentUser().getEmail());
+            textUsername.setText(AVUser.getCurrentUser().getUsername());
+
+        }else {
+            //未登录状态
+            LOGIN_STATE=LOGIN_OUT;
+            itemLogin.setTitle("登录");
+            textMail.setText("请先登录");
+            textUsername.setText("");
+        }
+    }
+
+    //设置navi子item的点击事件（扫一扫、登录注销等等）
     private void setZXing(int itemId) {
         switch (itemId) {
             case R.id.home_page:
@@ -110,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             case R.id.button_3_create_capture:
                 cameraCreateQRCode();
                 break;
+            case R.id.button_4_login:
+                login();
         }
     }
 
@@ -137,8 +184,28 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //开启生成二维码的应用
     private void cameraCreateQRCode() {
-        Intent intent=new Intent(this,CreateQRCodeActivity.class);
-        startActivity(intent);
+//        if(LOGIN_STATE==LOGIN_IN) {
+            Intent intent = new Intent(this, CreateQRCodeActivity.class);
+            startActivity(intent);
+//        }else {
+//            Toast.makeText(this,"请先登录！",Toast.LENGTH_SHORT).show();
+//        }
+    }
+
+    //处理具体的登录注销操作
+    private void login() {
+        switch (LOGIN_STATE){
+            //已经登录的状态，点击按钮是注销
+            case LOGIN_IN:
+                AVUser.getCurrentUser().logOut();
+                //注销后刷新判断登录状态
+                isLoginIn();
+                break;
+            //注销状态，点击按钮启动登录活动
+            case LOGIN_OUT:
+
+                break;
+        }
     }
 
     //处理二维码返回结果

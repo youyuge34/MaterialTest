@@ -1,4 +1,4 @@
-package com.example.yousheng.materialtest_guolin.view;
+package com.example.yousheng.materialtest_guolin.zxing;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.yousheng.materialtest_guolin.R;
+import com.example.yousheng.materialtest_guolin.view.BaseActivity;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 

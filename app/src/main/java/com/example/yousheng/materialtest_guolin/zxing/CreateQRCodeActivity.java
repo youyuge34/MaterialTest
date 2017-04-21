@@ -1,4 +1,4 @@
-package com.example.yousheng.materialtest_guolin.view;
+package com.example.yousheng.materialtest_guolin.zxing;
 
 import android.Manifest;
 import android.graphics.Bitmap;
@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.yousheng.materialtest_guolin.R;
 import com.example.yousheng.materialtest_guolin.bean.Spot;
 import com.example.yousheng.materialtest_guolin.util.ImageUtil;
+import com.example.yousheng.materialtest_guolin.view.BaseActivity;
 import com.google.gson.GsonBuilder;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 

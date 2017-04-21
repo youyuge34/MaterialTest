@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:orientation="vertical"
-    tools:context="com.example.yousheng.materialtest_guolin.view.CreateQRCodeActivity">
+    tools:context="com.example.yousheng.materialtest_guolin.zxing.CreateQRCodeActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

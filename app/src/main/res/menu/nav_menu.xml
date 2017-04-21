@@ -18,8 +18,8 @@
             android:icon="@drawable/ic_action_create_capture"
             android:title="生成二维码" />
         <item
-            android:id="@+id/warning"
+            android:id="@+id/button_4_login"
             android:icon="@drawable/warning"
-            android:title="warning" />
+            android:title="登录" />
     </group>
 </menu>
