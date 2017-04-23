@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yousheng.materialtest_guolin.R;
@@ -106,6 +107,9 @@ public class CreateQRCodeActivity extends BaseActivity implements EasyPermission
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("");
+            TextView toolbarTitle= (TextView) toolbar.findViewById(R.id.toolbar_title);
+            toolbarTitle.setText("生成二维码");
         }
     }
 

@@ -90,6 +90,13 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         //初始化登陆注销的按钮、头布局、邮箱、登录名
         itemLogin = navigationMenu.getMenu().getItem(4);
         navHeader = navigationMenu.getHeaderView(0);
+        navHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.newInstance(MainActivity.this);
+            }
+        });
+
         textMail = (TextView) navHeader.findViewById(R.id.mail);
         textUsername = (TextView) navHeader.findViewById(R.id.username);
         navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -207,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             //注销状态，点击按钮启动登录活动
             case LOGIN_OUT:
                 LoginActivity.newInstance(this);
+                drawerLayout.closeDrawers();
                 break;
         }
     }

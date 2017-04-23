@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.yousheng.materialtest_guolin.R;
 import com.example.yousheng.materialtest_guolin.view.BaseActivity;
@@ -51,6 +52,9 @@ public class CaptureMadeByUsActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("");
+            TextView toolbarTitle= (TextView) toolbar.findViewById(R.id.toolbar_title);
+            toolbarTitle.setText("扫一扫");
         }
     }
 

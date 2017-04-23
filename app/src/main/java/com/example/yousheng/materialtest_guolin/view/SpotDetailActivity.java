@@ -117,6 +117,9 @@ public class SpotDetailActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("");
+            TextView toolbarTitle= (TextView) toolbar.findViewById(R.id.toolbar_title);
+            toolbarTitle.setText("详情页");
         }
         collapsingToolbarLayout.setTitle(mSpot.name);
     }

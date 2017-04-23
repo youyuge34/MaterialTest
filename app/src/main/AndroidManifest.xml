@@ -54,6 +54,9 @@
         <activity
             android:name=".login.LoginActivity"
             android:theme="@style/AppTheme.FruitTheme.Transparent" />
+        <activity
+            android:name=".login.RegisterActivity"
+            android:theme="@style/AppTheme.FruitTheme.Transparent" />
     </application>
 
 </manifest>
