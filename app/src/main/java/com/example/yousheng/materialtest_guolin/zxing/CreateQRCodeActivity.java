@@ -109,17 +109,6 @@ public class CreateQRCodeActivity extends BaseActivity implements EasyPermission
         }
     }
 
-
-    @Override
-    protected void setListener() {
-
-    }
-
-    @Override
-    protected void processLogic(Bundle savedInstanceState) {
-
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

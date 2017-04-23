@@ -29,7 +29,7 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon1"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -50,6 +50,9 @@
             android:theme="@style/AppTheme.FruitTheme.Transparent" />
         <activity
             android:name=".zxing.CreateQRCodeActivity"
+            android:theme="@style/AppTheme.FruitTheme.Transparent" />
+        <activity
+            android:name=".login.LoginActivity"
             android:theme="@style/AppTheme.FruitTheme.Transparent" />
     </application>
 

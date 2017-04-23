@@ -29,4 +29,8 @@
         <item name="tabMode">fixed</item>
     </style>
 
+    <style name="FloatingStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#008dfa</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

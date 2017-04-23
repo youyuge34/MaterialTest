@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.avos.avoscloud.AVUser;
 import com.example.yousheng.materialtest_guolin.R;
 import com.example.yousheng.materialtest_guolin.adapter.ViewpagerAdapter;
 import com.example.yousheng.materialtest_guolin.bean.Spot;
+import com.example.yousheng.materialtest_guolin.login.LoginActivity;
 import com.example.yousheng.materialtest_guolin.util.ImageUtil;
 import com.example.yousheng.materialtest_guolin.zxing.CaptureMadeByUsActivity;
 import com.example.yousheng.materialtest_guolin.zxing.CreateQRCodeActivity;
@@ -45,15 +47,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     TabLayout tabLayout;
     @BindView(R.id.main_viewpager)
     ViewPager viewPager;
-//    @BindView(R.id.button_4_login)
-//    MenuItem itemLogin;
-//    @BindView(R.id.mail)
-//    TextView textMail;
-//    @BindView(R.id.username)
-//    TextView textUsername;
-MenuItem itemLogin;
+    MenuItem itemLogin;
     TextView textMail;
     TextView textUsername;
+    View navHeader;
 
 
     private static final int REQUEST_CODE = 0;
@@ -61,9 +58,9 @@ MenuItem itemLogin;
     public static final int PAGE_COUNT = 3;
     //请求CAMERA权限码
     public static final int REQUEST_CAMERA_PERM = 101;
-    public static  int LOGIN_STATE=2;
-    public static final int LOGIN_IN=4;
-    public static final int LOGIN_OUT=5;
+    public static int LOGIN_STATE = 2;
+    public static final int LOGIN_IN = 4;
+    public static final int LOGIN_OUT = 5;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,14 +87,15 @@ MenuItem itemLogin;
     private void setNavigation() {
         //在drawer抽屉中建立一个navigation的view，此view包含一个header布局和一个menu
         NavigationView navigationMenu = (NavigationView) findViewById(R.id.nav_view);
-        itemLogin=navigationMenu.getMenu().getItem(4);
-        textMail= (TextView) navigationMenu.getHeaderView(0).findViewById(R.id.mail);
-        textUsername=(TextView) navigationMenu.getHeaderView(0).findViewById(R.id.username);
+        //初始化登陆注销的按钮、头布局、邮箱、登录名
+        itemLogin = navigationMenu.getMenu().getItem(4);
+        navHeader = navigationMenu.getHeaderView(0);
+        textMail = (TextView) navHeader.findViewById(R.id.mail);
+        textUsername = (TextView) navHeader.findViewById(R.id.username);
         navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 setZXing(item.getItemId());
-                drawerLayout.closeDrawers();
                 return true;
             }
         });
@@ -125,16 +123,16 @@ MenuItem itemLogin;
     //回到页面或者点击注销 都会调用，来判断是否已经登录，从而改变登录状态码和侧栏文字
     private void isLoginIn() {
         //若是已经登录了
-        if(AVUser.getCurrentUser()!=null){
+        if (AVUser.getCurrentUser() != null) {
             //改变状态变量
-            LOGIN_STATE=LOGIN_IN;
+            LOGIN_STATE = LOGIN_IN;
             itemLogin.setTitle("注销");
             textMail.setText(AVUser.getCurrentUser().getEmail());
             textUsername.setText(AVUser.getCurrentUser().getUsername());
 
-        }else {
+        } else {
             //未登录状态
-            LOGIN_STATE=LOGIN_OUT;
+            LOGIN_STATE = LOGIN_OUT;
             itemLogin.setTitle("登录");
             textMail.setText("请先登录");
             textUsername.setText("");
@@ -145,11 +143,14 @@ MenuItem itemLogin;
     private void setZXing(int itemId) {
         switch (itemId) {
             case R.id.home_page:
+                drawerLayout.closeDrawers();
                 break;
             case R.id.button_1_capture:
+                drawerLayout.closeDrawers();
                 cameraTask();
                 break;
             case R.id.button_2_from_gallery:
+                drawerLayout.closeDrawers();
                 cameraFromGalleryTask();
                 break;
             case R.id.button_3_create_capture:
@@ -184,26 +185,28 @@ MenuItem itemLogin;
 
     //开启生成二维码的应用
     private void cameraCreateQRCode() {
-//        if(LOGIN_STATE==LOGIN_IN) {
+        if (LOGIN_STATE == LOGIN_IN) {
+            drawerLayout.closeDrawers();
             Intent intent = new Intent(this, CreateQRCodeActivity.class);
             startActivity(intent);
-//        }else {
-//            Toast.makeText(this,"请先登录！",Toast.LENGTH_SHORT).show();
-//        }
+        } else {
+            Toast.makeText(this, "请先登录！", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    //处理具体的登录注销操作
+    //处理具体的登录/注销操作
     private void login() {
-        switch (LOGIN_STATE){
+        switch (LOGIN_STATE) {
             //已经登录的状态，点击按钮是注销
             case LOGIN_IN:
                 AVUser.getCurrentUser().logOut();
                 //注销后刷新判断登录状态
                 isLoginIn();
+                Toast.makeText(this,"已注销",Toast.LENGTH_SHORT).show();
                 break;
             //注销状态，点击按钮启动登录活动
             case LOGIN_OUT:
-
+                LoginActivity.newInstance(this);
                 break;
         }
     }
@@ -234,7 +237,7 @@ MenuItem itemLogin;
         /**
          * 选择gallery图片并解析
          */
-        else if(requestCode == REQUEST_IMAGE){
+        else if (requestCode == REQUEST_IMAGE) {
             if (data != null) {
                 Uri uri = data.getData();
                 try {
@@ -255,9 +258,7 @@ MenuItem itemLogin;
                     e.printStackTrace();
                 }
             }
-        }
-
-        else if (requestCode == REQUEST_CAMERA_PERM) {
+        } else if (requestCode == REQUEST_CAMERA_PERM) {
             Toast.makeText(this, "从设置页面返回...", Toast.LENGTH_SHORT)
                     .show();
         }

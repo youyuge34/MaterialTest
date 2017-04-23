@@ -41,16 +41,6 @@ public class CaptureMadeByUsActivity extends BaseActivity {
         initView();
     }
 
-    @Override
-    protected void setListener() {
-
-    }
-
-    @Override
-    protected void processLogic(Bundle savedInstanceState) {
-
-    }
-
     private void initView() {
         setToolbar();
         setButtonFlashlight();

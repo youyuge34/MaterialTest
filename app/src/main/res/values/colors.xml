@@ -6,4 +6,8 @@
     <color name="navigationBarColor">#92cdF0</color>
     <color name="tabselectedgray">#ccc</color>
     <color name="fabBlue">#529ecc</color>
+    <color name="button_normal">#008dfa</color>
+    <color name="button_pressed">#0e5ea5</color>
+    <drawable name="text_normal">#fff</drawable>
+    <drawable name="text_pressed">#aaa</drawable>
 </resources>

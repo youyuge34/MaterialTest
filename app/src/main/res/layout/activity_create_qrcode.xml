@@ -8,14 +8,7 @@
     android:orientation="vertical"
     tools:context="com.example.yousheng.materialtest_guolin.zxing.CreateQRCodeActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_scrollFlags="scroll|enterAlways|snap"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    <include layout="@layout/toolbar_layout" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
