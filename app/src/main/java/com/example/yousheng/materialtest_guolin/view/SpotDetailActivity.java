@@ -19,11 +19,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.yousheng.materialtest_guolin.R;
 import com.example.yousheng.materialtest_guolin.bean.Spot;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -158,7 +158,7 @@ public class SpotDetailActivity extends BaseActivity {
                 ClipboardManager manager = (ClipboardManager) this.getSystemService(
                         Context.CLIPBOARD_SERVICE);
                 manager.setPrimaryClip(clipData);
-                Toast.makeText(this,"复制成功", Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(this,"复制成功",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
                 return true;
             case R.id.action_open_url:
                 Intent intent = new Intent();
@@ -168,7 +168,7 @@ public class SpotDetailActivity extends BaseActivity {
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 } else {
-                    Toast.makeText(this,"打开失败！",Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(this,"打开失败",TastyToast.LENGTH_SHORT,TastyToast.WARNING);
                 }
                 return true;
         }

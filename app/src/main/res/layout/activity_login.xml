@@ -10,7 +10,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/login_bg1"
+            android:background="@drawable/login_bg_2"
             android:orientation="vertical">
 
             <LinearLayout
@@ -52,6 +52,8 @@
                         android:id="@+id/username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:imeActionLabel="下一项"
+                        android:imeOptions="actionNext"
                         android:hint="@string/username"
                         android:inputType="text"
                         android:maxLines="1"
@@ -100,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="28dp"
                     android:background="@drawable/login_button_selector"
                     android:text="注册"
                     android:textColor="@drawable/login_text_selector"

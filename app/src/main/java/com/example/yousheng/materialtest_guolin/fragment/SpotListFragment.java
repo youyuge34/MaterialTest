@@ -12,14 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.yousheng.materialtest_guolin.R;
-import com.example.yousheng.materialtest_guolin.util.GlideImageLoader;
 import com.example.yousheng.materialtest_guolin.adapter.SpotAdapter;
 import com.example.yousheng.materialtest_guolin.adapter.onRecyclerViewItemClicked;
 import com.example.yousheng.materialtest_guolin.bean.Spot;
 import com.example.yousheng.materialtest_guolin.presenter.IListPresenter;
 import com.example.yousheng.materialtest_guolin.presenter.ListPresenter;
+import com.example.yousheng.materialtest_guolin.util.GlideImageLoader;
 import com.example.yousheng.materialtest_guolin.view.IListFragment;
 import com.example.yousheng.materialtest_guolin.view.SpotDetailActivity;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -219,14 +220,21 @@ public class SpotListFragment extends Fragment implements IListFragment {
     public void showNoNextPage() {
         recyclerView.setLoadingMoreEnabled(false);
         //snackbar比起toast多一个按钮,传入的第一个参数为界面布局任意一个view，snackbar会自动查找最外布局来展示
-        Snackbar.make(recyclerView, "兄弟，没有更多数据了！", Snackbar.LENGTH_LONG).setAction("知道啦", new View.OnClickListener() {
+        Snackbar snackbar=Snackbar.make(recyclerView, "兄弟，没有更多数据了！", Snackbar.LENGTH_LONG).setAction("知道啦", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(getActivity(), "data restored", Toast.LENGTH_SHORT).show();
 //                recyclerView.smoothScrollToPosition(0);
             }
-        }).show();
+        });
+        View view = snackbar.getView();//获取Snackbar的view
+        if(view!=null){
+            view.setBackgroundColor(getResources().getColor(R.color.fabBlue));//修改view的背景色
+            ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(getResources().getColor(android.R.color.white));//获取Snackbar的message控件，修改字体颜色
+        }
+        snackbar.show();
     }
+
 
     @Override
     public void showBanner(List<Spot> spots) {

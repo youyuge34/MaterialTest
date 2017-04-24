@@ -3,7 +3,7 @@
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    android:background="@drawable/material_flat"
+    android:background="@drawable/nav_header_bg"
     android:padding="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView

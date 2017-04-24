@@ -17,13 +17,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SignUpCallback;
 import com.example.yousheng.materialtest_guolin.R;
 import com.example.yousheng.materialtest_guolin.view.BaseActivity;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -71,8 +71,31 @@ public class RegisterActivity extends BaseActivity {
         setButtonRegister();
     }
 
+    //用户名、邮箱框键盘右下角变为"下一项"按钮
     //密码框键盘右下角变为"注册"按钮，且可以直接注册
     private void setIMERegister() {
+        editUsername.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_NEXT || actionId == EditorInfo.IME_NULL){
+                    editEmail.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        editEmail.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_NEXT || actionId == EditorInfo.IME_NULL){
+                    editPassword.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             //actionId默认为xml中imeOptions的值，只有xml中设定的actionId为@integer时候，下面的actionId才会变成我们设定的值
             @Override
@@ -88,6 +111,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void setButtonRegister() {
+        buttonRegister.getBackground().setAlpha(80);
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,13 +162,12 @@ public class RegisterActivity extends BaseActivity {
                 @Override
                 public void done(AVException e) {
                     if (e == null) {
-                        // 注册成功，把用户对象赋值给当前用户 AVUser.getCurrentUser()
-//                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                        TastyToast.makeText(RegisterActivity.this,"注册成功！",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
                         RegisterActivity.this.finish();
                     } else {
                         // 失败的原因可能有多种，常见的是用户名已经存在。
                         showProgress(false);
-                        Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(RegisterActivity.this,"注册失败："+e.getMessage(),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                     }
                 }
             });

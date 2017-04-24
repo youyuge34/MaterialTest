@@ -28,6 +28,7 @@ import com.example.yousheng.materialtest_guolin.util.ImageUtil;
 import com.example.yousheng.materialtest_guolin.zxing.CaptureMadeByUsActivity;
 import com.example.yousheng.materialtest_guolin.zxing.CreateQRCodeActivity;
 import com.google.gson.Gson;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.List;
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             //未登录状态
             LOGIN_STATE = LOGIN_OUT;
             itemLogin.setTitle("登录");
-            textMail.setText("请先登录");
+            textMail.setText("点击登陆");
             textUsername.setText("");
         }
     }
@@ -197,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             Intent intent = new Intent(this, CreateQRCodeActivity.class);
             startActivity(intent);
         } else {
-            Toast.makeText(this, "请先登录！", Toast.LENGTH_SHORT).show();
+            TastyToast.makeText(this,"请先登录！",TastyToast.LENGTH_SHORT,TastyToast.WARNING);
         }
     }
 
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 AVUser.getCurrentUser().logOut();
                 //注销后刷新判断登录状态
                 isLoginIn();
-                Toast.makeText(this,"已注销",Toast.LENGTH_SHORT).show();
+                TastyToast.makeText(this,"注销成功",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
                 break;
             //注销状态，点击按钮启动登录活动
             case LOGIN_OUT:
@@ -235,10 +236,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                     String result = bundle.getString(CodeUtils.RESULT_STRING);
                     Spot spotTemp = new Gson().fromJson(result, Spot.class);
-//                    Toast.makeText(this, "解析结果:" + spotTemp.getName(), Toast.LENGTH_LONG).show();
+                    TastyToast.makeText(this,"解析成功",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
                     SpotDetailActivity.newInstance(this, spotTemp);
                 } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                    Toast.makeText(MainActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
+                    TastyToast.makeText(this,"解析二维码失败！",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                 }
             }
         }
@@ -252,14 +253,13 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     CodeUtils.analyzeBitmap(ImageUtil.getImageAbsolutePath(this, uri), new CodeUtils.AnalyzeCallback() {
                         @Override
                         public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-//                            Toast.makeText(MainActivity.this, "解析结果:" + result, Toast.LENGTH_LONG).show();
                             Spot spotTemp = new Gson().fromJson(result, Spot.class);
                             SpotDetailActivity.newInstance(MainActivity.this, spotTemp);
                         }
 
                         @Override
                         public void onAnalyzeFailed() {
-                            Toast.makeText(MainActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
+                            TastyToast.makeText(MainActivity.this,"解析二维码失败！",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                         }
                     });
                 } catch (Exception e) {
@@ -319,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        Toast.makeText(this, "权限已允许!", Toast.LENGTH_SHORT).show();
+        TastyToast.makeText(this,"权限已允许！",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
     }
 
     @Override

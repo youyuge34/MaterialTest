@@ -18,13 +18,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
 import com.example.yousheng.materialtest_guolin.R;
 import com.example.yousheng.materialtest_guolin.view.BaseActivity;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +66,9 @@ public class LoginActivity extends BaseActivity {
 
     //设置登陆和注册按钮的点击事件
     private void setButtonClicked() {
+        //按钮半透明度
+        buttonLogin.getBackground().setAlpha(80);
+        buttonRegister.getBackground().setAlpha(80);
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +85,18 @@ public class LoginActivity extends BaseActivity {
     }
 
     //密码框键盘右下角变为"登陆"按钮，且可以直接登陆
+    //用户名键盘右下角变为"下一项"按钮，可以focus到下一个框
     private void setIMEPassword() {
+        editUsername.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT || actionId == EditorInfo.IME_NULL) {
+                    editPassword.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
         editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             //actionId默认为xml中imeOptions的值，只有xml中设定的actionId为@integer时候，下面的actionId才会变成我们设定的值
             @Override
@@ -119,9 +133,9 @@ public class LoginActivity extends BaseActivity {
         }
 
         //若账号或者密码有问题，则焦点聚焦到问题上
-        if(cancel){
+        if (cancel) {
             focusView.requestFocus();
-        }else {
+        } else {
             //显示进度条方法
             showProgress(true);
 
@@ -130,11 +144,11 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void done(AVUser avUser, AVException e) {
                     if (e == null) {
-                        Toast.makeText(LoginActivity.this,"登陆成功！",Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(LoginActivity.this,"登录成功！",TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
                         LoginActivity.this.finish();
                     } else {
                         showProgress(false);
-                        Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(LoginActivity.this,"登录错误："+e.getMessage(),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                     }
                 }
             });
@@ -175,7 +189,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length()>4;
+        return password.length() > 4;
     }
 
     private void setToolbar() {
@@ -184,7 +198,7 @@ public class LoginActivity extends BaseActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("");
-            TextView toolbarTitle= (TextView) toolbar.findViewById(R.id.toolbar_title);
+            TextView toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             toolbarTitle.setText("登陆");
         }
     }
