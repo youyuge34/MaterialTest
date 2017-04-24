@@ -35,7 +35,7 @@ public class SpotDetailActivity extends BaseActivity {
 
     @BindView(R.id.spot_image_view) ImageView spotImage;
     @BindView(R.id.spot_content_text) TextView spotText;
-    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar2) Toolbar toolbar;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.fab_share) FloatingActionButton fabShare;
     @BindView(R.id.fab_up_to_top) FloatingActionButton fabUpToTop;
@@ -71,6 +71,11 @@ public class SpotDetailActivity extends BaseActivity {
         fabShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //只有登录状态才能用收藏功能
+                if(MainActivity.LOGIN_STATE==MainActivity.LOGIN_OUT){
+                    TastyToast.makeText(SpotDetailActivity.this,"请先登录",TastyToast.LENGTH_SHORT,TastyToast.WARNING);
+                    return;
+                }
                 if(!clickedFabShare){
                     //若是没收藏状态
                     fabShare.setImageResource(R.drawable.ic_love_selected);
@@ -117,9 +122,6 @@ public class SpotDetailActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("");
-            TextView toolbarTitle= (TextView) toolbar.findViewById(R.id.toolbar_title);
-            toolbarTitle.setText("详情页");
         }
         collapsingToolbarLayout.setTitle(mSpot.name);
     }

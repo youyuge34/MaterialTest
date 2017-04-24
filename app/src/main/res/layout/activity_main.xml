@@ -16,7 +16,8 @@
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/activity_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/login_bg1">
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"

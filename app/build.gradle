@@ -52,5 +52,9 @@ dependencies {
     compile 'cn.leancloud.android:avoscloud-statistics:v3.+'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.sdsmdg.tastytoast:tastytoast:0.1.1'
+    //解决tastytoast引入版本为24的support包导致的依赖冲突
+    compile ('com.sdsmdg.tastytoast:tastytoast:0.1.1'){
+            exclude module: 'appcompat-v7'
+    }
+    compile 'com.pnikosis:materialish-progress:1.7'
 }

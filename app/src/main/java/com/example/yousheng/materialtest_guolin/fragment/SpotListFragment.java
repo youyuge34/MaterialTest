@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.yousheng.materialtest_guolin.R;
@@ -25,6 +24,7 @@ import com.example.yousheng.materialtest_guolin.view.IListFragment;
 import com.example.yousheng.materialtest_guolin.view.SpotDetailActivity;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.pnikosis.materialishprogress.ProgressWheel;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -43,8 +43,9 @@ import butterknife.ButterKnife;
 public class SpotListFragment extends Fragment implements IListFragment {
 
     @BindView(R.id.fragment_main_recyclerview) XRecyclerView recyclerView;
-    @BindView(R.id.progress_first_page) ProgressBar progressFirstPage;
     @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.progress_wheel)
+    ProgressWheel progressWheel;
 
     private static final String COUNT_OF_FRAGMENT = "count_of_this_fragment";
 
@@ -72,7 +73,6 @@ public class SpotListFragment extends Fragment implements IListFragment {
         if (savedInstanceState == null) {
             Bundle bundle = getArguments();
             position = bundle.getInt(COUNT_OF_FRAGMENT);
-
             setRetainInstance(true);
         }
     }
@@ -105,6 +105,8 @@ public class SpotListFragment extends Fragment implements IListFragment {
     }
 
     private void initView(View view) {
+        //首次加载显示的进度条开始旋转
+        progressWheel.spin();
         setXRVrefresh();
         setBanner();
         setFloatingButton();
@@ -169,9 +171,7 @@ public class SpotListFragment extends Fragment implements IListFragment {
 
     //首页第一次加载完毕后让进度圈消失，以后再也不用出现了
     private void setProgressFirstPageOff() {
-        if(progressFirstPage.isShown()){
-            progressFirstPage.setVisibility(View.GONE);
-        }
+        progressWheel.stopSpinning();
     }
 
     private void setFloatingButton() {

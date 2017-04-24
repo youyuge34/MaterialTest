@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     private void setNavigation() {
+        //设置背景透明度
+        View view=findViewById(R.id.activity_main);
+        view.getBackground().setAlpha(70);
         //在drawer抽屉中建立一个navigation的view，此view包含一个header布局和一个menu
         NavigationView navigationMenu = (NavigationView) findViewById(R.id.nav_view);
         //初始化登陆注销的按钮、头布局、邮箱、登录名
