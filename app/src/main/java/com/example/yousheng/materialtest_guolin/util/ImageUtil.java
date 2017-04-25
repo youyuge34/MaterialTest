@@ -27,11 +27,14 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.sdsmdg.tastytoast.TastyToast;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 文 件 名: ImageUtil
@@ -172,7 +175,7 @@ public class ImageUtil {
             Log.d("test1", "saveImageToGallery: "+uri);
             context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
             if (isSuccess) {
-                Toast.makeText(context,"已存到"+uri,Toast.LENGTH_LONG).show();
+                TastyToast.makeText(context,"已存到"+uri,TastyToast.LENGTH_LONG,TastyToast.SUCCESS);
                 return true;
             } else {
                 return false;
@@ -181,6 +184,31 @@ public class ImageUtil {
             e.printStackTrace();
         }
         return false;
+    }
+
+    //输入流转换成byte字符串数据
+    public static byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+        int len;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteArrayOutputStream.write(buffer, 0, len);
+        }
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    //转换bitmap为二进制数据
+    public static byte[] getBitmapByte(Bitmap bitmap){
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        try {
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return out.toByteArray();
     }
 
 }

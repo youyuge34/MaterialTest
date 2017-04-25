@@ -131,7 +131,7 @@ public class RegisterActivity extends BaseActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             editPassword.setError("密码必须大于4位");
             focusView = editPassword;
             cancel = true;

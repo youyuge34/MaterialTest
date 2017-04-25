@@ -120,7 +120,7 @@ public class LoginActivity extends BaseActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             editPassword.setError("密码必须大于四位");
             focusView = editPassword;
             cancel = true;

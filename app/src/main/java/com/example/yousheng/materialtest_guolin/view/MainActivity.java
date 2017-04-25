@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     private void setNavigation() {
         //设置背景透明度
-        View view=findViewById(R.id.activity_main);
-        view.getBackground().setAlpha(70);
+//        View view=findViewById(R.id.activity_main);
+//        view.getBackground().setAlpha(70);
         //在drawer抽屉中建立一个navigation的view，此view包含一个header布局和一个menu
         NavigationView navigationMenu = (NavigationView) findViewById(R.id.nav_view);
         //初始化登陆注销的按钮、头布局、邮箱、登录名
@@ -284,21 +284,22 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.delete:
-                Toast.makeText(this, "delete", Toast.LENGTH_SHORT).show();
+            case R.id.share:
+                Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.setting:
                 Toast.makeText(this, "setting", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.star:
-                Toast.makeText(this, "star", Toast.LENGTH_SHORT).show();
+            case R.id.bookmark:
+                Toast.makeText(this, "bookmark", Toast.LENGTH_SHORT).show();
                 break;
 
             //点击到导航图标后
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
+                break;
 
         }
         return true;

@@ -114,7 +114,10 @@ public class SpotDetailActivity extends BaseActivity {
 
     private void setSpotImage() {
         Glide.with(this).load(mSpot.picUrl).into(spotImage);
-        spotText.setText("ereregsgsg234324sdfsdf\nrewrwerfs");
+        if(mSpot.getInfo()==null){
+            spotText.setText("mSpot.getInfo()==null");
+        }
+        else spotText.setText(mSpot.getInfo());
     }
 
     private void setCollapseAndToolbar() {
@@ -134,7 +137,9 @@ public class SpotDetailActivity extends BaseActivity {
         settings.setSupportZoom(true);
         webView.setWebViewClient(new LoveClient());
 
-        webView.loadUrl("http://qr14.cn/DpKTsu");
+        if(mSpot.getWebUrl()==null||mSpot.getWebUrl().isEmpty()){
+            webView.loadUrl("http://qr14.cn/DpKTsu");
+        }else webView.loadUrl(mSpot.getWebUrl());
     }
 
     @Override

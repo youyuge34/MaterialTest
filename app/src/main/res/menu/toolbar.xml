@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/star"
-        android:icon="@drawable/star"
-        android:title="star"
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share"
+        android:title="share"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/delete"
-        android:icon="@drawable/delete"
-        android:title="delete"
+        android:id="@+id/bookmark"
+        android:icon="@drawable/ic_bookmark"
+        android:title="bookmark"
         app:showAsAction="ifRoom" />
+
 
     <item
         android:id="@+id/setting"
-        android:icon="@drawable/setting"
+        android:icon="@drawable/ic_setting"
         android:title="setting"
         app:showAsAction="never" />
 </menu>

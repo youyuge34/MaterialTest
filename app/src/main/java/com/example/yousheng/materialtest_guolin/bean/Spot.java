@@ -12,6 +12,16 @@ public class Spot implements Serializable{
     public String addTime;
     public String picUrl;
     public String info;
+    public String webUrl;
+
+    public String getWebUrl() {
+        return webUrl;
+    }
+
+    public void setWebUrl(String webUrl) {
+        this.webUrl = webUrl;
+    }
+
     public int id;
 
     public String getName() {
