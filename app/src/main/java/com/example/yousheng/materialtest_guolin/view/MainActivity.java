@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     private void setZXing(int itemId) {
         switch (itemId) {
             case R.id.home_page:
-                drawerLayout.closeDrawers();
+                startActivity(new Intent(this,ListSquareActivity.class));
                 break;
             case R.id.button_1_capture:
                 drawerLayout.closeDrawers();

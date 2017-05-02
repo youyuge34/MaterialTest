@@ -2,7 +2,6 @@ package com.example.yousheng.materialtest_guolin;
 
 import android.app.Application;
 
-import com.avos.avoscloud.AVAnalytics;
 import com.avos.avoscloud.AVOSCloud;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
@@ -24,7 +23,7 @@ public class App extends Application {
         ZXingLibrary.initDisplayOpinion(this);
         //leancloud云初始化
         AVOSCloud.initialize(this, "csOq3edhDJ1vEiw98wOVetdu-gzGzoHsz", "LTadyMCEHoAJ8EvMdfUszOPX");
-        AVOSCloud.setDebugLogEnabled(true);
-        AVAnalytics.enableCrashReport(this, true);
+//        AVOSCloud.setDebugLogEnabled(true);
+//        AVAnalytics.enableCrashReport(this, true);
     }
 }
