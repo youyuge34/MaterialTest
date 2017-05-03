@@ -11,13 +11,9 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVObject;
 import com.bumptech.glide.Glide;
 import com.example.yousheng.materialtest_guolin.R;
-import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by yousheng on 17/5/2.
@@ -27,20 +23,14 @@ public class SquareListAdapter extends RecyclerView.Adapter<SquareListAdapter.Sq
     private List<AVObject> mList = new ArrayList<>();
     private Context mContext;
 
-    public SquareListAdapter(List<AVObject> mList) {
+    public SquareListAdapter(List<AVObject> mList,Context context) {
         this.mList = mList;
-    }
-
-    @Override
-    public void onViewRecycled(SquareHolder holder) {
-        
-        super.onViewRecycled(holder);
+        mContext=context;
     }
 
     @Override
     public SquareHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_square_list, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_square_list, parent, false);
         return new SquareHolder(view);
     }
 
@@ -50,12 +40,12 @@ public class SquareListAdapter extends RecyclerView.Adapter<SquareListAdapter.Sq
         holder.spotOwner.setText(mList.get(position).getAVUser("owner") == null ? "unknown" : mList.get(position).getAVUser("owner").getUsername());
         Glide.with(mContext).load(mList.get(position).get("picUrl")).into(holder.sqareImage);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TastyToast.makeText(mContext,""+mList.get(position).getObjectId(),TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                TastyToast.makeText(mContext,""+mList.get(position).getObjectId(),TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
+//            }
+//        });
     }
 
     @Override
@@ -64,17 +54,18 @@ public class SquareListAdapter extends RecyclerView.Adapter<SquareListAdapter.Sq
     }
 
     public class SquareHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.square_image)
         ImageView sqareImage;
-        @BindView(R.id.spot_name)
         TextView spotName;
-        @BindView(R.id.spot_owner)
         TextView spotOwner;
 
+        View itemView;
 
         public SquareHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            this.itemView=itemView;
+            sqareImage= (ImageView) itemView.findViewById(R.id.square_image);
+            spotName= (TextView) itemView.findViewById(R.id.spot_name);
+            spotOwner= (TextView) itemView.findViewById(R.id.spot_owner);
         }
     }
 }

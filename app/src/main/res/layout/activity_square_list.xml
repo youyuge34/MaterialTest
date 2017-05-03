@@ -7,12 +7,14 @@
     android:background="#fff"
     android:orientation="vertical">
 
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include layout="@layout/toolbar_layout" />
     </android.support.design.widget.AppBarLayout>
+
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/recycler_square"

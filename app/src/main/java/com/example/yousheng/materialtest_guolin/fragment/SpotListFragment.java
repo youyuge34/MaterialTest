@@ -42,8 +42,10 @@ import butterknife.ButterKnife;
 
 public class SpotListFragment extends Fragment implements IListFragment {
 
-    @BindView(R.id.fragment_main_recyclerview) XRecyclerView recyclerView;
-    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.fragment_main_recyclerview)
+    XRecyclerView recyclerView;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     @BindView(R.id.progress_wheel)
     ProgressWheel progressWheel;
 
@@ -140,14 +142,14 @@ public class SpotListFragment extends Fragment implements IListFragment {
         //获取屏幕高度用来设定banner的height
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        banner.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (dm.heightPixels/3.7)));
+        banner.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (dm.heightPixels / 3.7)));
         banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
         banner.setBannerAnimation(Transformer.DepthPage);
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                SpotDetailActivity.newInstance(getActivity(),mList.get(position));
-                getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                SpotDetailActivity.newInstance(getActivity(), mList.get(position));
+                getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
 
@@ -163,8 +165,8 @@ public class SpotListFragment extends Fragment implements IListFragment {
         adapter.setOnRecyclerViewItemClickedListener(new onRecyclerViewItemClicked() {
             @Override
             public void onClicked(int position) {
-                SpotDetailActivity.newInstance(getActivity(),mList.get(position-2));
-                getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                SpotDetailActivity.newInstance(getActivity(), mList.get(position - 2));
+                getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
     }
@@ -220,7 +222,7 @@ public class SpotListFragment extends Fragment implements IListFragment {
     public void showNoNextPage() {
         recyclerView.setLoadingMoreEnabled(false);
         //snackbar比起toast多一个按钮,传入的第一个参数为界面布局任意一个view，snackbar会自动查找最外布局来展示
-        Snackbar snackbar=Snackbar.make(recyclerView, "兄弟，没有更多数据了！", Snackbar.LENGTH_LONG).setAction("知道啦", new View.OnClickListener() {
+        Snackbar snackbar = Snackbar.make(recyclerView, "兄弟，没有更多数据了！", Snackbar.LENGTH_LONG).setAction("知道啦", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(getActivity(), "data restored", Toast.LENGTH_SHORT).show();
@@ -228,7 +230,7 @@ public class SpotListFragment extends Fragment implements IListFragment {
             }
         });
         View view = snackbar.getView();//获取Snackbar的view
-        if(view!=null){
+        if (view != null) {
             view.setBackgroundColor(getResources().getColor(R.color.fabBlue));//修改view的背景色
             ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(getResources().getColor(android.R.color.white));//获取Snackbar的message控件，修改字体颜色
         }
@@ -238,13 +240,13 @@ public class SpotListFragment extends Fragment implements IListFragment {
 
     @Override
     public void showBanner(List<Spot> spots) {
-        int pageCount=spots.size()>=5?5:spots.size();
-        List<String> picUrls=new ArrayList<>();
-        List<String> picTitles=new ArrayList<>();
-        for(int i=0;i<pageCount;i++){
+        int pageCount = spots.size() >= 5 ? 5 : spots.size();
+        List<String> picUrls = new ArrayList<>();
+        List<String> picTitles = new ArrayList<>();
+        for (int i = 0; i < pageCount; i++) {
             picUrls.add(spots.get(i).picUrl);
         }
-        for(int i=0;i<pageCount;i++){
+        for (int i = 0; i < pageCount; i++) {
             picTitles.add(spots.get(i).name);
         }
 
