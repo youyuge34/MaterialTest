@@ -305,6 +305,7 @@ public class CreateQRCodeActivity extends BaseActivity implements EasyPermission
     private void showProgress() {
         viewProgressBg.setBackgroundColor(getResources().getColor(android.R.color.white));
         viewProgressBg.getBackground().setAlpha(100);
+        viewProgressBg.setVisibility(View.VISIBLE);
         progressWheel.setVisibility(View.VISIBLE);
         progressWheel.setProgress(0);
         progressWheel.spin();
@@ -315,6 +316,8 @@ public class CreateQRCodeActivity extends BaseActivity implements EasyPermission
 
     private void hideProgress() {
         viewProgressBg.setVisibility(View.GONE);
+        progressWheel.setVisibility(View.GONE);
+        textProgress.setVisibility(View.GONE);
     }
 
     private void setToolbar() {

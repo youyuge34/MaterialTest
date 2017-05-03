@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVObject;
 import com.bumptech.glide.Glide;
 import com.example.yousheng.materialtest_guolin.R;
+import com.example.yousheng.materialtest_guolin.view.SquareDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +41,13 @@ public class SquareListAdapter extends RecyclerView.Adapter<SquareListAdapter.Sq
         holder.spotOwner.setText(mList.get(position).getAVUser("owner") == null ? "unknown" : mList.get(position).getAVUser("owner").getUsername());
         Glide.with(mContext).load(mList.get(position).get("picUrl")).into(holder.sqareImage);
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SquareDetailActivity.newInstance(mContext,mList.get(position).getObjectId().toString());
 //                TastyToast.makeText(mContext,""+mList.get(position).getObjectId(),TastyToast.LENGTH_SHORT,TastyToast.SUCCESS);
-//            }
-//        });
+            }
+        });
     }
 
     @Override

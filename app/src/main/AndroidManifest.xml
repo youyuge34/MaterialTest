@@ -60,6 +60,9 @@
         <activity
             android:name=".view.ListSquareActivity"
             android:theme="@style/AppTheme.FruitTheme.Transparent" />
+        <activity
+            android:name=".view.SquareDetailActivity"
+            android:theme="@style/AppTheme.FruitTheme.Transparent" />
     </application>
 
 </manifest>
