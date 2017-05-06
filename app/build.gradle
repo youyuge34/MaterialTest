@@ -57,4 +57,7 @@ dependencies {
             exclude module: 'appcompat-v7'
     }
     compile 'com.pnikosis:materialish-progress:1.7'
+//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 }
