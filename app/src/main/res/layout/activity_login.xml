@@ -8,14 +8,7 @@
 
     <include layout="@layout/toolbar_layout" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"></LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/email_login_form"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -33,14 +26,16 @@
             android:visibility="gone" />
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/input1"
+            android:theme="@style/Theme.AppCompat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="160dp"
             app:hintTextAppearance="@style/FloatingStyle">
 
-            <AutoCompleteTextView
+            <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,14 +49,17 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/input2"
             android:layout_width="match_parent"
+            android:theme="@style/Theme.AppCompat"
             android:layout_height="wrap_content"
+            android:layout_below="@id/input1"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginTop="16dp"
             app:hintTextAppearance="@style/FloatingStyle">
 
-            <EditText
+            <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,6 +77,7 @@
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/input2"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginTop="32dp"
@@ -92,6 +91,7 @@
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/username_login_button"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginTop="28dp"
@@ -100,6 +100,6 @@
             android:textColor="@drawable/login_text_selector"
             android:textSize="18sp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
