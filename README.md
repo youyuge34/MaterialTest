@@ -1,2 +1,2 @@
 # MaterialTest
-郭霖的《第一行代码》第2版，第12章的UI material design实例
+印象南京App，mvp+retrofit+rxjava，包含登陆，上传，服务器读取功能。
